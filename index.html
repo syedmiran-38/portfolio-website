@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syed Miran Hussain</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        
+        
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+/* Main Container */
+.container {
+    text-align: center;
+    background: linear-gradient(to bottom, #232323, #121212);
+    padding: 40px 60px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
+    margin: 50px auto;
+    width: 90%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.7);
+}
+
+/* Profile Section */
+.profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.profile img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.profile .details {
+    text-align: center;
+    flex-grow: 1;
+    margin-top: 10px;
+}
+
+.profile h1 {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+.profile .headline {
+    color: #b0b0b0;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+/* Social Media Icons */
+.profile .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 10px 0;
+}
+
+.profile .social-links a {
+    font-size: 24px; /* Adjust size */
+    color: #d0d0d0;
+    transition: color 0.3s ease-in-out;
+}
+
+.profile .social-links a:hover {
+    color: #007bff;
+}
+
+/* Contact Section Styling */
+.contact-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 40px;
+    padding: 10px;
+}
+
+.contact-section,
+.profile-section {
+    text-align: left;
+    flex: 1;
+}
+
+.contact-section p,
+.profile-section p {
+    margin: 10px 0;
+    color: #d0d0d0;
+    font-size: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: #ffffff;
+    transition: color 0.3s ease-in-out;
+}
+
+a:hover {
+    color: #aaaaaa;
+}
+
+/* Resume Button Styling */
+.resume-btn {
+    display: inline-block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.resume-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .contact-container {
+        flex-direction: column;
+    }
+    .contact-section,
+    .profile-section {
+        width: 100%;
+    }
+}
+
+        
+
+        /* Gallery */
+/* General Gallery Layout */
+.gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between rows */
+}
+
+/* Portrait Row - Two images with space between */
+.gallery .row {
+    display: flex;
+    justify-content: space-between; /* Space between the two images */
+    gap: 10px; /* Space adjustment between portrait images */
+}
+
+.gallery .row img {
+    width: calc(50% - 5px); /* Two images equally spaced */
+    height: auto;
+    cursor: pointer;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* Landscape Photo Section - Below Portraits */
+.gallery .landscape {
+    margin-top: 15px; /* Adds vertical space between portrait gallery and landscape photo */
+}
+
+.gallery .landscape img {
+    width: 100%; /* Makes landscape image span the full width */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Smooth hover effect */
+}
+
+.gallery .landscape img:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Caption for Landscape Image */
+.caption {
+    display: none;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 40px;
+    color: #555;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.caption.active {
+    display: block;
+}
+
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.modal-content {
+    max-width: 50%;
+    height: auto;
+    margin: auto;
+    border-radius: 10px;
+}
+
+#caption {
+    color: white;
+    margin-top: 10px;
+    font-size: 1rem;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+
+        /* Skills & Other Lists */
+        h2 {
+            font-size: 1.8rem;
+            margin: 15px 0;
+            color: #e0e0e0;
+            border-bottom: 2px solid #555;
+            padding-bottom: 3px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+            color: #d0d0d0;
+        }
+
+        li {
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+        
+/* General Reset and Global Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #000;
+  color: #fff;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* Main Container */
+.container {
+  text-align: center;
+  background: #1c1c1c;
+  padding: 40px 60px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  margin: 50px auto;
+  width: 80%;
+}
+
+/* Section Styling */
+.section {
+  margin: 30px 0;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #fff;
+  display: inline-block;
+  padding-bottom: 5px;
+  color: #e0e0e0;
+}
+
+/* Projects Section - Cards Grid */
+.content {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+/* Card Styling for Projects */
+.card {
+  background: #333;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  flex: 1 1 48%;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  text-decoration: none;
+  color: white;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .profile {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .contact-container {
+        flex-direction: column;
+    }
+
+    .contact-section, .profile-section {
+        text-align: center;
+    }
+
+    .content {
+        flex-direction: column;
+    }
+
+    .card {
+        flex: 1 1 100%;
+    }
+}
+
+        /* Footer */
+        footer {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 30px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .profile {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .contact-container {
+                flex-direction: column;
+            }
+
+            .contact-section,
+            .profile-section {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Main Section Container -->
+    <div class="container">
+        <!-- Profile Section -->
+        <div class="profile">
+            <img src="images/Syed Miran.png" alt="Syed Miran Hussain">
+            <div class="details">
+                <h1>Syed Miran Hussain</h1>
+                <p class="headline">An Aspiring Data Scientist | Founding Google DSC Lead 2023 | Google Cloud Arcade Facilitator | BETA MLSA</p>
+            </div>
+        </div>
+
+<!-- Contact & Profiles Section -->
+<div class="contact-container">
+    <!-- Contact Info Section -->
+    <div class="contact-section">
+        <h2>Contact</h2>
+        <p>📞 +91 8374874731</p>
+        <p>📧 <a href="mailto:syedmiran331@gmail.com">syedmiran331@gmail.com</a></p>
+    </div>
+
+    <!-- Profile Section -->
+    <div class="profile-section">
+        <h2>Profiles</h2>
+        <!-- Social Media Links with Icons -->
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/syed-miran-hussain-39bb62211/" target="_blank" title="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://leetcode.com/u/syedmiran31/" target="_blank" title="LeetCode">
+                <i class="fab fa-codepen"></i>
+            </a>
+            <a href="https://github.com/syedmiran-38" target="_blank" title="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+
+        <ul>
+            <li><a href="https://www.linkedin.com/in/syed-miran-hussain-39bb62211/" target="_blank">Syed Miran Hussain</a></li>
+            <li><a href="https://leetcode.com/u/syedmiran31/" target="_blank">syedmiran31</a></li>
+            <li><a href="https://github.com/syedmiran-38" target="_blank">Syedmiran-38</a></li>
+        </ul>
+
+        <!-- Resume Button -->
+        <a class="resume-btn" href="images/Syed Miran Resume.pdf" target="_blank">View Resume</a>
+    </div>
+</div>
+        <div class="container">
+            <!-- Education Section -->
+            <div class="section education">
+              <h2>Education</h2>
+              <div class="content">
+                <div class="card">
+                  <h3>Lords Institute of Engineering and Technology</h3>
+                  <p><strong>Bachelors of Engineering - CSE Data Science</strong></p>
+                  <p>8.4 GPA</p>
+                  <p>November 2021 - Present</p>
+                </div>
+              </div>
+            </div>
+          
+            <!-- Experience Section -->
+            <div class="section experience">
+              <h2>Experience</h2>
+              <div class="content">
+                <div class="card">
+                  <h3>Google Developer Student Clubs</h3>
+                  <p><strong>Role:</strong> Lead</p>
+                  <p>July 2023 - September 2024</p>
+                  <p>Organized diverse events focused on Google Cloud, Android, and Machine Learning.</p>
+                </div>
+                <div class="card">
+                  <h3>Microsoft</h3>
+                  <p><strong>Role:</strong> BETA MLSA</p>
+                  <p>April 2023 - Present</p>
+                  <p>Developed user-friendly resources for training sessions and led initiatives improving knowledge retention.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="container">
+            <!-- Projects Section -->
+<div class="section projects">
+    <h2>Projects</h2>
+    <div class="content">
+      <!-- Card 1: Predict Student Success -->
+      <a href="https://github.com/syedmiran-38/predict-student-success-ml" target="_blank" class="card">
+        <div>
+          <h3>Predict Student Success</h3>
+          <p><strong>ML Model:</strong> Random Forest & Gradient Boosting</p>
+          <p>A machine learning system designed to predict student performance using historical data trends.</p>
+        </div>
+      </a>
+  
+      <!-- Card 2: Netflix Data Insights Dashboard -->
+      <a href="https://github.com/syedmiran-38/Netflix_Dashboard" target="_blank" class="card">
+        <div>
+          <h3>Netflix Data Insights Dashboard</h3>
+          <p><strong>Tool:</strong> Tableau</p>
+          <p>Interactive and data-driven dashboard visualizing content trends for user engagement and decision-making insights.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+  
+          
+          
+
+        <!-- Gallery Section -->
+<div class="section">
+    <h2>Gallery</h2>
+    <div class="gallery">
+        <!-- Portrait Photos Rows -->
+        <div class="row">
+            <img src="images/awrd.HEIC" alt="Gallery Image 1" onclick="openModal('images/awrd.HEIC')">
+            <img src="images/Img2.jpg" alt="Gallery Image 2" onclick="openModal('images/Img2.jpg', 'Caption for Image 2')">
+        </div>
+        <div class="row">
+            <img src="images/Img3.heic" alt="Gallery Image 3" onclick="openModal('images/Img3.heic', 'Caption for Image 3')">
+            <img src="images/Miran.png" alt="Gallery Image 4" onclick="openModal('images/Miran.png', 'Caption for Miran Image')">
+        </div>
+        
+        <!-- Landscape Photo Section -->
+        <div class="landscape">
+            <div class="image-container" onclick="toggleCaption()">
+                <img src="images/Grp.jpg" alt="Gallery Landscape" id="landscapePhoto">
+                <div class="caption">Caption for Landscape Image</div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+        
+
+<!-- Modal Section -->
+<div id="imageModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImage">
+    <div id="caption"></div>
+</div>
+
+
+        <!-- Footer Section -->
+        <footer>&copy; 2024 Syed Miran Hussain. All Rights Reserved.</footer>
+    </div>
+
+    <script>
+        function openModal(imagePath, captionText) {
+            alert("You clicked: " + imagePath + "\nCaption: " + captionText);
+            // Add modal logic here if needed
+        }
+
+        function toggleCaption() {
+            const container = document.querySelector('.image-container');
+            container.classList.toggle('active');
+        }
+    </script>
+
+
+
+</body>
+
+</html>
+
+
